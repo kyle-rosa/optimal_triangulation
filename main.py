@@ -33,7 +33,7 @@ optimise_colours = False
 
 ## Fitting parameters:
 device = "cuda"
-steps = 2_000
+steps = 1_000
 learning_rate = 4e-3
 blur_radius = 0
 faces_per_pixel = 1
@@ -44,7 +44,6 @@ vis_steps = 4  # display and write every vis_steps frames
 frame_rate = 24.0
 
 input_images = sorted(glob.glob('data/input/*'))
-
 for image_path in input_images:
     image_name = image_path.split('.')[-2].split('/')[-1]
     output_dir = Path(f'data/output/{image_name}')
@@ -166,27 +165,30 @@ for image_path in input_images:
             stats_log[stat].append(stats[stat])
 
         # Visualise frames and save to video:
-        if step%vis_steps==0:
+        if (step%vis_steps==0)or(step==steps-1):
             visualisations = {
                 'Interpolated': (
                     interpolated_features
-                    .mul(256).sub(1/2).clamp(0, 255).to(torch.uint8)[0, ..., [2, 1, 0]]
+                    .mul(255).add(1/2).clamp(0, 255).to(torch.uint8)[0, ..., [2, 1, 0]]
+                    .cpu().numpy()
                 ),
                 'Area':(
                     interpolated_vertex_area
                     .div(interpolated_vertex_area.max())  # normalise
                     .pow(1/2.33)  # gamma correction
-                    .mul(256).sub(1/2).clamp(0, 255).to(torch.uint8)[0, ..., [0, 0, 0]]
+                    .mul(255).add(1/2).clamp(0, 255).to(torch.uint8)[0, ..., [0, 0, 0]]
+                    .cpu().numpy()
                 ),
                 'Mesh': (
                     fragments.dists
                     .abs().div(-sigma2).exp()
                     .sub(1).mul(-1)  # flip colours
-                    .mul(256).sub(1/2).clamp(0, 255).to(torch.uint8)[0, ..., [0, 0, 0]]
+                    .mul(255).add(1/2).clamp(0, 255).to(torch.uint8)[0, ..., [0, 0, 0]]
+                    .cpu().numpy()
                 )
             }
             for window in windows:
-                vis = visualisations[window].cpu().numpy()
+                vis = visualisations[window]
                 video_writers[window].write(vis)
                 cv2.imshow(window, vis)
             cv2.waitKey(1)
