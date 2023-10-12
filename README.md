@@ -12,13 +12,24 @@ It starts out by randomly distributing vertices over the image. Then, we iterate
 
 Minimising this loss reduces the reconstruction error over time. Multiplying by the vertex areas reduces the density of vertices in well-approximated areas and increases their density in poorly approximated areas.
 
-![](images/Mesh_0.png?raw=true)
-![](images/Mesh_16.png?raw=true)
-![](images/Mesh_80.png?raw=true)
-![](images/Mesh_400.png?raw=true)
-![](images/Mesh_1200.png?raw=true)
-![](images/Mesh_2000.png?raw=true)
-![](data/output/test1/RMS%20Error.png)
-
+<p align="center">
+  <img src="images/Mesh_0.png?raw=true" width="450">
+  <img src="images/Interpolated_0.png?raw=true" width="450">
+</p>
+<p align="center">
+  <img src="images/Mesh_16.png?raw=true" width="450">
+  <img src="images/Interpolated_16.png?raw=true" width="450">
+</p>
+<p align="center">
+  <img src="images/Mesh_80.png?raw=true" width="450"> 
+  <img src="images/Interpolated_80.png?raw=true" width="450"> 
+</p>
+<p align="center">
+  <img src="images/Mesh_2000.png?raw=true" width="450">
+  <img src="images/Interpolated_2000.png?raw=true" width="450">
+</p>
+<p align="center">
+  <img src="data/output/test1/RMS%20Error.png" width="600">
+</p>
 References:
 1. Optimal Delaunay Triangulations, https://www.math.uci.edu/~chenlong/Papers/Chen.L%3BXu.J2004.pdf.
