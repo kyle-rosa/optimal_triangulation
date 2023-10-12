@@ -9,6 +9,7 @@ It starts out by randomly distributing vertices over the image. Then, we iterate
 4. Calculate the squared error between the original and reprojected pixel colours.
 5. Estimate the area of each vertex's Voronoi cell, and interpolate these values to the pixels.
 6. Calculate the loss at each pixel by multiplying the error and interpolated area. The total loss is the sum of the losses at each pixel.
+7. Backpropagate the loss value through all the above steps, and update the vertex locations to minimise it.
 
 Minimising this loss reduces the reconstruction error over time. Multiplying by the vertex areas reduces the density of vertices in well-approximated areas and increases their density in poorly approximated areas.
 
