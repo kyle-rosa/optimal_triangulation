@@ -18,6 +18,7 @@ Minimising this loss reduces the reconstruction error over time. Multiplying by 
 ![](images/Mesh_400.png?raw=true)
 ![](images/Mesh_1200.png?raw=true)
 ![](images/Mesh_2000.png?raw=true)
+![](data/output/test1/RMS%20Error.png)
 
 References:
 1. Optimal Delaunay Triangulations, https://www.math.uci.edu/~chenlong/Papers/Chen.L%3BXu.J2004.pdf.
