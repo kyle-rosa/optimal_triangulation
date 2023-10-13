@@ -17,36 +17,36 @@ Minimising this loss reduces the reconstruction error over time.
 Multiplying by the vertex areas reduces the density of vertices in well-approximated areas and increases their density in poorly approximated areas.
 
 <p align="center">
-  <img src="images/Mesh_0.png?raw=true" width="300">
-  <img src="images/Interpolated_0.png?raw=true" width="300">
-  <img src="images/Area_0.png?raw=true" width="300">
+  <img src="images/Mesh_0.png?raw=true" width="250">
+  <img src="images/Interpolated_0.png?raw=true" width="250">
+  <img src="images/Area_0.png?raw=true" width="250">
 </p>
 <p align="center">
-  <img src="images/Mesh_16.png?raw=true" width="300">
-  <img src="images/Interpolated_16.png?raw=true" width="300">
-  <img src="images/Area_16.png?raw=true" width="300">
+  <img src="images/Mesh_16.png?raw=true" width="250">
+  <img src="images/Interpolated_16.png?raw=true" width="250">
+  <img src="images/Area_16.png?raw=true" width="250">
 </p>
 <p align="center">
-  <img src="images/Mesh_80.png?raw=true" width="300"> 
-  <img src="images/Interpolated_80.png?raw=true" width="300"> 
-  <img src="images/Area_80.png?raw=true" width="300">
-</p>
-</p>
-<p align="center">
-  <img src="images/Mesh_400.png?raw=true" width="300"> 
-  <img src="images/Interpolated_400.png?raw=true" width="300"> 
-  <img src="images/Area_400.png?raw=true" width="300">
+  <img src="images/Mesh_80.png?raw=true" width="250"> 
+  <img src="images/Interpolated_80.png?raw=true" width="250"> 
+  <img src="images/Area_80.png?raw=true" width="250">
 </p>
 </p>
 <p align="center">
-  <img src="images/Mesh_1200.png?raw=true" width="300"> 
-  <img src="images/Interpolated_1200.png?raw=true" width="300"> 
-  <img src="images/Area_1200.png?raw=true" width="300">
+  <img src="images/Mesh_400.png?raw=true" width="250"> 
+  <img src="images/Interpolated_400.png?raw=true" width="250"> 
+  <img src="images/Area_400.png?raw=true" width="250">
+</p>
 </p>
 <p align="center">
-  <img src="images/Mesh_2000.png?raw=true" width="300">
-  <img src="images/Interpolated_2000.png?raw=true" width="300">
-  <img src="images/Area_2000.png?raw=true" width="300">
+  <img src="images/Mesh_1200.png?raw=true" width="250"> 
+  <img src="images/Interpolated_1200.png?raw=true" width="250"> 
+  <img src="images/Area_1200.png?raw=true" width="250">
+</p>
+<p align="center">
+  <img src="images/Mesh_2000.png?raw=true" width="250">
+  <img src="images/Interpolated_2000.png?raw=true" width="250">
+  <img src="images/Area_2000.png?raw=true" width="250">
 </p>
 <p align="center">
   <img src="data/output/test1/RMS%20Error.png" width="600">
