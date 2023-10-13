@@ -33,7 +33,7 @@ optimise_colours = False
 
 ## Fitting parameters:
 device = "cuda"
-steps = 1_000
+steps = 2_001
 learning_rate = 4e-3
 blur_radius = 0
 faces_per_pixel = 1
@@ -170,27 +170,51 @@ for image_path in input_images:
                 'Interpolated': (
                     interpolated_features
                     .mul(255).add(1/2).clamp(0, 255).to(torch.uint8)[0, ..., [2, 1, 0]]
-                    .cpu().numpy()
                 ),
                 'Area':(
                     interpolated_vertex_area
                     .div(interpolated_vertex_area.max())  # normalise
                     .pow(1/2.33)  # gamma correction
                     .mul(255).add(1/2).clamp(0, 255).to(torch.uint8)[0, ..., [0, 0, 0]]
-                    .cpu().numpy()
                 ),
                 'Mesh': (
                     fragments.dists
                     .abs().div(-sigma2).exp()
                     .sub(1).mul(-1)  # flip colours
                     .mul(255).add(1/2).clamp(0, 255).to(torch.uint8)[0, ..., [0, 0, 0]]
-                    .cpu().numpy()
                 )
             }
             for window in windows:
-                vis = visualisations[window]
+                vis = visualisations[window].cpu().numpy()
                 video_writers[window].write(vis)
                 cv2.imshow(window, vis)
+            
+            if step in {0, 16, 80, 400, 1200, 2000}:
+                print(interpolated_features.shape, fragments.dists.shape)
+                torchvision.utils.save_image(
+                    (
+                        fragments.dists
+                        .abs().div(-sigma2).exp()
+                        .sub(1).mul(-1)
+                    ).movedim(-1, 0), 
+                    output_dir / f'Mesh_{step}.png'
+                )
+                torchvision.utils.save_image(
+                    (
+                        interpolated_features
+                    ).movedim(-1, -3), 
+                    output_dir / f'Interpolated_{step}.png'
+                )
+                torchvision.utils.save_image(
+                    (
+                        interpolated_vertex_area
+                        .div(interpolated_vertex_area.max())  # normalise
+                        .pow(1/2.33)  # gamma correction 
+                    ).movedim(-1, -3), 
+                    output_dir / f'Area_{step}.png'
+                )
+            
+
             cv2.waitKey(1)
 
     # Save plots:
