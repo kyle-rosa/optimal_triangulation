@@ -4,56 +4,54 @@ This repository demonstrates an algorithm for finding ``good" triangulations of 
 # Algorithm
 <!-- ## Vertex Locations Only -->
 The image data consists of 1) the locations and 2) colour values for each pixel, which are stored in a $HW\times 2$ matrix and a $HW\times 3$ matrix, respectively. We start out by randomly distributing vertices over the image storing their positions in a $V\times2$ real matrix. We haven't calculated vertex colours yet, but can note that they will occupy a $V\times3$ matrix.
-$
+$$
 \begin{align}
 \texttt{pixels}&: \mathbb{R}^{HW\times 2} \\
 \texttt{pixel\_colours}&: \mathbb{R}^{HW\times 3} \\
 \texttt{verts}&: \mathbb{R}^{V\times 2} \\
-\texttt{vertex\_colours}&: \mathbb{R}^{V\times 3} \\
+\texttt{vertex\_colours}&: \mathbb{R}^{V\times 3} 
 \end{align}
-$
+$$
 Then, we iterate through the following steps:
 1. Find the Delaunay triangulation of the vertices.
 2. Calculate the colour of each vertex using a weighted average of the nearby pixels.
-$
+$$
 \begin{align}
-\texttt{aggregate}&: (\texttt{verts},\texttt{ pixels},\texttt{ pixel\_colours})\mapsto\texttt{vertex\_colours} \\
+\texttt{aggregate}&: (\texttt{verts},\texttt{ pixels},\texttt{ pixel\_colours})\mapsto\texttt{vertex\_colours} 
 \end{align}
-$
+$$
 3. Reproject the vertex colours back onto the pixels via linear interpolation.
-$
+$$
 \begin{align}
 \texttt{interpolate}&: (\texttt{verts},\texttt{ pixels},\texttt{ vertex\_colours})\mapsto\texttt{pixel\_colours} \\
-\texttt{reprojection} &= \texttt{interpolate}(\texttt{verts},\texttt{ pixels},\texttt{ aggregate(\texttt{verts},\texttt{ pixels},\texttt{ pixel\_colours})}) \\
+\texttt{reprojection} &= \texttt{interpolate}(\texttt{verts},\texttt{ pixels},\texttt{ aggregate(\texttt{verts},\texttt{ pixels},\texttt{ pixel\_colours})}) 
 \end{align}
-$
+$$
 4. Calculate the error between the original and reprojected pixel colours.
-$
+$$
 \begin{align}
- \texttt{error} &= \texttt{reprojection} - \texttt{pixel\_colours} \\
+\texttt{error} &= \texttt{reprojection} - \texttt{pixel\_colours} 
 \end{align}
-$
-
+$$
 5. Estimate the area of each vertex's Voronoi cell, and interpolate these values to the pixels.
-$
+$$
 \begin{align}
 \texttt{vertex\_areas} &: \texttt{verts} \to \mathbb{R}^V \\
-\texttt{pixel\_areas} &= \texttt{interpolate}(\texttt{verts},\texttt{ pixels},\texttt{ vertex\_areas}(\texttt{verts})) \\
+\texttt{pixel\_areas} &= \texttt{interpolate}(\texttt{verts},\texttt{ pixels},\texttt{ vertex\_areas}(\texttt{verts})) 
 \end{align}
-$
+$$
 6. Calculate the loss at each pixel by multiplying the error and interpolated area. 
-$
+$$
 \begin{align}
-\texttt{loss} &= \texttt{error}^2 \times \texttt{pixel\_areas} \\
+\texttt{loss} &= \texttt{error}^2 \times \texttt{pixel\_areas} 
 \end{align}
-$
-
+$$
 7. Backpropagate the total loss value through all the above steps, and update the vertex locations to minimise it.
-$
+$$
 \begin{align}
-\texttt{total\_loss} &= \sum\texttt{loss} \\
+\texttt{total\_loss} &= \sum\texttt{loss} 
 \end{align}
-$
+$$
 
 Minimising this loss reduces the reconstruction error over time. 
 Multiplying by the vertex areas reduces the density of vertices in well-approximated areas, and increases their density in poorly approximated areas.
