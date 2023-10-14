@@ -188,30 +188,28 @@ for image_path in input_images:
                 vis = visualisations[window].cpu().numpy()
                 video_writers[window].write(vis)
                 cv2.imshow(window, vis)
-            
+
             if step in {0, 16, 80, 400, 1200, 2000}:
                 print(interpolated_features.shape, fragments.dists.shape)
                 torchvision.utils.save_image(
-                    (
-                        fragments.dists
-                        .abs().div(-sigma2).exp()
-                        .sub(1).mul(-1)
-                    ).movedim(-1, 0), 
-                    output_dir / f'Mesh_{step}.png'
-                )
-                torchvision.utils.save_image(
-                    (
-                        interpolated_features
-                    ).movedim(-1, -3), 
-                    output_dir / f'Interpolated_{step}.png'
-                )
-                torchvision.utils.save_image(
-                    (
-                        interpolated_vertex_area
-                        .div(interpolated_vertex_area.max())  # normalise
-                        .pow(1/2.33)  # gamma correction 
-                    ).movedim(-1, -3), 
-                    output_dir / f'Area_{step}.png'
+                    torch.cat(
+                        [
+                            (
+                                fragments.dists
+                                .abs().div(-sigma2).exp()
+                                .sub(1).mul(-1)[..., [0, 0, 0]]
+                            ).movedim(-1, -3), 
+                            (
+                                interpolated_features
+                            ).movedim(-1, -3), 
+                            (
+                                interpolated_vertex_area
+                                .div(interpolated_vertex_area.max())  # normalise
+                                .pow(1/2.33)[..., [0, 0, 0]]  # gamma correction 
+                            ).movedim(-1, -3), 
+                        ], dim=-1
+                    ),
+                    f'images/visualisation_{step}.png'
                 )
             
 
