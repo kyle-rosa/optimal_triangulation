@@ -1,8 +1,6 @@
 # Optimal Triangulation 
 <p align="center">
-  <img src="images/Mesh_400.png?raw=true" width="250"> 
-  <img src="images/Interpolated_400.png?raw=true" width="250"> 
-  <img src="images/Area_400.png?raw=true" width="250">
+  <img src="images/visualisation_400.png?raw=true" width="750">
 </p>
 
 This repository demonstrates an algorithm for finding ``good" triangulations of images. In this context, a triangulation is good if it generates a piecewise-linear approximation of the target image with low reconstruction error.
